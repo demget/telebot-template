@@ -1,0 +1,5 @@
+settings:
+  locales_dir: data
+  default_locale: ru
+  token_env: TOKEN
+  parse_mode: html

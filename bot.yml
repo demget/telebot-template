@@ -1,5 +1,19 @@
 settings:
-  locales_dir: data
-  default_locale: ru
   token_env: TOKEN
   parse_mode: html
+
+buttons:
+  lang: &lang
+    unique: lang
+  lang_ru:
+    <<: *lang
+    callback_data: ru
+    text: 🇷🇺
+  lang_en:
+    <<: *lang
+    callback_data: en
+    text: 🇬🇧
+
+markups:
+  lang:
+    - [lang_ru, lang_en]

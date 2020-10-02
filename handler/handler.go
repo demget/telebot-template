@@ -14,18 +14,14 @@ func New(c Config) Handler {
 }
 
 type (
-	Handler struct {
-		lt *telelt.Layout
-		b  *tele.Bot
-		db *storage.DB
-	}
 	Config struct {
 		Layout *telelt.Layout
 		Bot    *tele.Bot
 		DB     *storage.DB
 	}
+	Handler struct {
+		lt *telelt.Layout
+		b  *tele.Bot
+		db *storage.DB
+	}
 )
-
-func (h Handler) Lt(c tele.Context) *telelt.Layout {
-	return h.lt.With(c)
-}

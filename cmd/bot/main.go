@@ -32,7 +32,7 @@ func main() {
 
 	// Middleware
 	b.OnError = h.OnError
-	b.Use(lt.Middleware("ru"))
+	b.Use(lt.Middleware("en", h.LocaleFunc))
 
 	// Handlers
 	b.Handle("/start", h.OnStart)

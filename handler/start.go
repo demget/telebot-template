@@ -6,7 +6,7 @@ import (
 	tele "gopkg.in/tucnak/telebot.v3"
 )
 
-func (h Handler) OnStart(c tele.Context) error {
+func (h handler) OnStart(c tele.Context) error {
 	chat := c.Sender()
 
 	has, err := h.db.Users.Exists(chat)
@@ -26,9 +26,8 @@ func (h Handler) OnStart(c tele.Context) error {
 		h.lt.Markup(c, "lang"))
 }
 
-func (h Handler) OnLang(c tele.Context) error {
+func (h handler) OnLang(c tele.Context) error {
 	lang := c.Callback().Data
-
 	if locale, _ := h.lt.Locale(c); locale == lang {
 		return c.Respond()
 	}

@@ -5,8 +5,8 @@ import (
 	telelt "gopkg.in/tucnak/telebot.v3/layout"
 )
 
-func New(c Config) Handler {
-	return Handler{
+func New(c Handler) handler {
+	return handler{
 		lt: c.Layout,
 		b:  c.Bot,
 		db: c.DB,
@@ -14,12 +14,12 @@ func New(c Config) Handler {
 }
 
 type (
-	Config struct {
+	Handler struct {
 		Layout *telelt.Layout
 		Bot    *tele.Bot
 		DB     *storage.DB
 	}
-	Handler struct {
+	handler struct {
 		lt *telelt.Layout
 		b  *tele.Bot
 		db *storage.DB

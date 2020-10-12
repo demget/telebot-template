@@ -4,12 +4,12 @@ import (
 	"log"
 	"os"
 
-	tele   "gopkg.in/tucnak/telebot.v3"
-	telelt "gopkg.in/tucnak/telebot.v3/layout"
+	tele "gopkg.in/tucnak/telebot.v3"
+	"gopkg.in/tucnak/telebot.v3/layout"
 )
 
 func main() {
-	lt, err := telelt.New("bot.yml")
+	lt, err := layout.New("bot.yml")
 	if err != nil {
 		log.Fatal(err)
 	}

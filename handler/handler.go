@@ -1,8 +1,8 @@
 package handler
 
 import (
-	tele   "gopkg.in/tucnak/telebot.v3"
-	telelt "gopkg.in/tucnak/telebot.v3/layout"
+	tele "gopkg.in/tucnak/telebot.v3"
+	"gopkg.in/tucnak/telebot.v3/layout"
 )
 
 func New(c Handler) handler {
@@ -15,12 +15,12 @@ func New(c Handler) handler {
 
 type (
 	Handler struct {
-		Layout *telelt.Layout
+		Layout *layout.Layout
 		Bot    *tele.Bot
 		DB     *storage.DB
 	}
 	handler struct {
-		lt *telelt.Layout
+		lt *layout.Layout
 		b  *tele.Bot
 		db *storage.DB
 	}

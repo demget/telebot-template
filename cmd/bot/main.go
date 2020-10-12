@@ -4,8 +4,12 @@ import (
 	"log"
 	"os"
 
+	"github.com/demget/clickrus"
+	"github.com/sirupsen/logrus"
+
 	tele "gopkg.in/tucnak/telebot.v3"
 	"gopkg.in/tucnak/telebot.v3/layout"
+	"gopkg.in/tucnak/telebot.v3/middleware"
 )
 
 func main() {
@@ -27,7 +31,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	h := handler.New(handler.Config{
+	ch, err := clickrus.NewHook(clickHouseConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	logger := logrus.New()
+	logger.SetOutput(os.Stdout)
+	logger.AddHook(ch)
+
+	h := handler.New(handler.Handler{
 		Layout: lt,
 		Bot:    b,
 		DB:     db,
@@ -35,10 +48,17 @@ func main() {
 
 	// Middleware
 	b.OnError = h.OnError
+	b.Use(middleware.Logger(logger, h.LoggerFields))
 	b.Use(lt.Middleware("en", h.LocaleFunc))
 
 	// Handlers
 	b.Handle("/start", h.OnStart)
 
 	b.Start()
+}
+
+var clickHouseConfig = clickrus.Config{
+	Addr:    os.Getenv("CLICKHOUSE_URL"),
+	Columns: []string{"date", "time", "level", "message", "event", "user_id"},
+	Table:   "logs",
 }

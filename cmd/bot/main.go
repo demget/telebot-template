@@ -59,6 +59,6 @@ func main() {
 
 var clickHouseConfig = clickrus.Config{
 	Addr:    os.Getenv("CLICKHOUSE_URL"),
-	Columns: []string{"date", "time", "level", "message", "event", "user_id"},
+	Columns: []string{"event", "user_id"},
 	Table:   "logs",
 }

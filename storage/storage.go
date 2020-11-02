@@ -1,9 +1,6 @@
 package storage
 
 import (
-	"database/sql/driver"
-	"encoding/json"
-	"errors"
 	"unicode"
 
 	"github.com/fatih/structs"

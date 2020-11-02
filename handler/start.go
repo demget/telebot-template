@@ -27,9 +27,11 @@ func (h handler) OnStart(c tele.Context) error {
 }
 
 func (h handler) OnLang(c tele.Context) error {
-	lang := c.Callback().Data
+	defer c.Respond()
+
+	lang := c.Data()
 	if locale, _ := h.lt.Locale(c); locale == lang {
-		return c.Respond()
+		return nil
 	}
 
 	if err := h.db.Users.SetLang(c.Sender(), lang); err != nil {

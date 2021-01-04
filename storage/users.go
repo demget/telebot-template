@@ -8,7 +8,7 @@ import (
 
 type (
 	UsersStorage interface {
-		Create(chat Chat) error
+		Create(chat Chat, ref string) error
 		Exists(chat Chat) (bool, error)
 		Lang(chat Chat) (string, error)
 		SetLang(chat Chat, lang string) error
@@ -18,20 +18,21 @@ type (
 		*sqlx.DB
 	}
 
+	User struct {
+		CreatedAt time.Time `sq:"created_at,omitempty"`
+		ID        int64     `sq:"chat_id,omitempty"`
+		Lang      string    `sq:"lang,omitempty"`
+		Ref       string    `sq:"ref,omitempty"`
+	}
+
 	Chat interface {
 		Recipient() string
 	}
-
-	User struct {
-		CreatedAt time.Time `sq:"created_at,omitempty"`
-		ID        int64     `db:"chat_id" sq:"chat_id,omitempty"`
-		Lang      string    `sq:"lang,omitempty"`
-	}
 )
 
-func (db *Users) Create(chat Chat) error {
-	const q = `INSERT INTO users (id, lang) VALUES (?, 'en')`
-	_, err := db.Exec(q, chat.Recipient())
+func (db *Users) Create(chat Chat, ref string) error {
+	const q = `INSERT INTO users (id, lang, ref) VALUES (?, 'en', ?)`
+	_, err := db.Exec(q, chat.Recipient(), ref)
 	return err
 }
 

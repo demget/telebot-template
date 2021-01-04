@@ -7,14 +7,17 @@ import (
 )
 
 func (h handler) OnStart(c tele.Context) error {
-	chat := c.Sender()
+	var (
+		chat = c.Sender()
+		ref  = c.Message().Payload
+	)
 
-	has, err := h.db.Users.Exists(chat)
+	exists, err := h.db.Users.Exists(chat)
 	if err != nil {
 		return err
 	}
 
-	if !has {
+	if !exists {
 		log.Println("Start from", chat.Recipient())
 		if err := h.db.Users.Create(chat, ref); err != nil {
 			return err
@@ -23,13 +26,14 @@ func (h handler) OnStart(c tele.Context) error {
 
 	return c.Send(
 		h.lt.Text(c, "start"),
-		h.lt.Markup(c, "lang"))
+		h.lt.Markup(c, "lang"),
+	)
 }
 
 func (h handler) OnLang(c tele.Context) error {
 	defer c.Respond()
-
 	lang := c.Data()
+
 	if locale, _ := h.lt.Locale(c); locale == lang {
 		return nil
 	}
@@ -42,5 +46,6 @@ func (h handler) OnLang(c tele.Context) error {
 
 	return c.Edit(
 		h.lt.Text(c, "start"),
-		h.lt.Markup(c, "lang"))
+		h.lt.Markup(c, "lang"),
+	)
 }

@@ -53,6 +53,7 @@ func main() {
 
 	// Handlers
 	b.Handle("/start", h.OnStart)
+	b.Handle(lt.Callback("lang"), h.OnLang)
 
 	b.Start()
 }
@@ -60,5 +61,5 @@ func main() {
 var clickHouseConfig = clickrus.Config{
 	Addr:    os.Getenv("CLICKHOUSE_URL"),
 	Columns: []string{"event", "user_id"},
-	Table:   "logs",
+	Table:   "bot.logs",
 }
